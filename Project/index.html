@@ -31,19 +31,23 @@
 </head>
 <body>
 <div class="container">
-  <div><img src="C:\Users\Musa-IT\Pictures\it-asset-signout\Assets\bel-logo.jpg.jpg" width="150" alt="Burhani Logo"> 
 
-    </div>
- 
-  <h1>IT Asset Sign-Out Form </h1
+  <!-- LOGO -->
+  <div>
+    <img src="assets/bel-logo.jpg" width="150" alt="Burhani Logo">
+  </div>
+
+  <h1>IT Asset Sign-Out Form</h1>
   <p class="muted">Fill details, sign below using finger / mouse or type name, then generate PDF to download.</p>
 
   <form id="assetForm" onsubmit="return false;">
     <div class="grid">
+
       <div>
         <label>Employee Name</label>
         <input type="text" id="emp_name" placeholder="Full name" />
       </div>
+
       <div>
         <label>Department</label>
         <input type="text" id="department" placeholder="Department" />
@@ -53,6 +57,7 @@
         <label>Date of Joining</label>
         <input type="date" id="doj" />
       </div>
+
       <div>
         <label>Employment Type</label>
         <select id="emp_type">
@@ -68,26 +73,28 @@
         <label>Designation</label>
         <input type="text" id="designation" placeholder="e.g. IT Support" />
       </div>
+
       <div>
-        <label>Previously Used By </label>
-        <input type="text" id="prev_emp_name" placeholder="Previous employee name" />
+        <label>Previously Used By</label>
+        <input type="text" id="prev_emp_name" placeholder="Previous employee" />
       </div>
 
       <div>
-        <label>Previous user Company </label>
+        <label>Previous User Company</label>
         <input type="text" id="prev_company" />
       </div>
+
       <div>
-        <label>Previous user Department</label>
+        <label>Previous User Department</label>
         <input type="text" id="prev_department" />
       </div>
 
       <div class="full">
-        <label>Asset Descriptions (up to 5 — separate them)</label>
-        <textarea id="asset_desc" placeholder="e.g. Laptop: Dell Latitude 5420; Charger; Bag"></textarea>
+        <label>Asset Descriptions</label>
+        <textarea id="asset_desc" placeholder="Laptop; Charger; Bag"></textarea>
       </div>
 
-      <!-- Serial Numbers as List -->
+      <!-- Serial Numbers -->
       <div class="full">
         <label>Serial Numbers</label>
         <div id="serialList" class="list-container">
@@ -96,7 +103,7 @@
         <button type="button" onclick="addSerialField()" class="btn-ghost">Add Another Serial</button>
       </div>
 
-      <!-- Inventory Numbers as List -->
+      <!-- Inventory Numbers -->
       <div class="full">
         <label>Inventory Numbers</label>
         <div id="invList" class="list-container">
@@ -106,9 +113,10 @@
       </div>
 
       <div>
-        <label>Date Returned (if any)</label>
+        <label>Date Returned</label>
         <input type="date" id="date_returned" />
       </div>
+
       <div>
         <label>Date Issued</label>
         <input type="date" id="date_issued" />
@@ -117,6 +125,7 @@
       <!-- Signatures -->
       <div class="full">
         <label>Signatures</label>
+
         <div class="signature-area">
           <div class="two-line" style="align-items:center; justify-content:space-between;">
 
@@ -124,11 +133,13 @@
             <div style="flex:1; margin-right:8px;">
               <div class="small">Employee signature (draw or type)</div>
               <canvas id="sig-canvas"></canvas>
-              <input type="text" id="typedSig" placeholder="Type your signature here" style="margin-top:6px;"/>
+
+              <input type="text" id="typedSig" placeholder="Type your signature" style="margin-top:6px;" />
               <button type="button" onclick="generateTypedSignature()" class="btn-ghost" style="margin-top:4px;">Generate Signature</button>
+
               <div class="buttons" style="margin-top:8px;">
-                <button type="button" id="clear-sign" class="btn-ghost">Clear signature</button>
-                <button type="button" id="undo-sign" class="btn-ghost">Undo stroke</button>
+                <button type="button" id="clear-sign" class="btn-ghost">Clear</button>
+                <button type="button" id="undo-sign" class="btn-ghost">Undo</button>
               </div>
             </div>
 
@@ -136,15 +147,19 @@
             <div style="width:220px;">
               <label>Administrator Name</label>
               <input type="text" id="admin_name" />
+
               <div style="margin-top:12px;">
-                <div class="small">Administrator signature (draw or type, optional)</div>
+                <div class="small">Administrator signature (optional)</div>
                 <canvas id="admin-canvas" style="height:80px; margin-top:6px;"></canvas>
-                <input type="text" id="typedAdminSig" placeholder="Type admin signature" style="margin-top:6px;"/>
+
+                <input type="text" id="typedAdminSig" placeholder="Type admin signature" style="margin-top:6px;" />
                 <button type="button" onclick="generateTypedAdminSignature()" class="btn-ghost" style="margin-top:4px;">Generate Signature</button>
+
                 <div class="buttons" style="margin-top:8px;">
-                  <button type="button" id="clear-admin" class="btn-ghost">Clear admin sig</button>
+                  <button type="button" id="clear-admin" class="btn-ghost">Clear</button>
                 </div>
               </div>
+
             </div>
 
           </div>
@@ -153,12 +168,13 @@
 
     </div>
 
+    <!-- Form Buttons -->
     <div class="buttons" style="margin-top:14px;">
       <button id="generate" class="btn-primary">Generate PDF</button>
       <button id="reset" class="btn-ghost" type="button">Reset Form</button>
     </div>
 
-    <p class="field-note">Tip: On mobile open the page in the browser, fill, then tap "Generate PDF".</p>
+    <p class="field-note">Tip: On mobile, fill then tap "Generate PDF".</p>
   </form>
 
   <footer>
@@ -166,177 +182,203 @@
   </footer>
 </div>
 
-<!-- External libraries -->
+<!-- Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
 <script>
-  // Canvas Setup
-  const sigCanvas = document.getElementById('sig-canvas');
-  const adminCanvas = document.getElementById('admin-canvas');
+// === CANVAS SETUP ===
+const sigCanvas = document.getElementById("sig-canvas");
+const adminCanvas = document.getElementById("admin-canvas");
 
-  function fitCanvas(canvas, heightPx=200){
-    const ratio = Math.max(window.devicePixelRatio || 1, 1);
-    canvas.style.width = '100%';
-    canvas.style.height = heightPx + 'px';
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = Math.round(rect.width * ratio);
-    canvas.height = Math.round(rect.height * ratio);
-    const ctx = canvas.getContext('2d');
-    ctx.scale(ratio, ratio);
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(0,0,rect.width, rect.height);
+function fitCanvas(canvas, heightPx = 200) {
+  const ratio = Math.max(window.devicePixelRatio || 1, 1);
+  canvas.style.width = "100%";
+  canvas.style.height = heightPx + "px";
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * ratio;
+  canvas.height = rect.height * ratio;
+  const ctx = canvas.getContext("2d");
+  ctx.scale(ratio, ratio);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, rect.width, rect.height);
+}
+
+function fitAll() {
+  fitCanvas(sigCanvas, 200);
+  fitCanvas(adminCanvas, 100);
+}
+
+window.addEventListener("resize", fitAll);
+fitAll();
+
+const signaturePad = new SignaturePad(sigCanvas, { penColor: "black" });
+const adminPad = new SignaturePad(adminCanvas, { penColor: "black" });
+
+document.getElementById("clear-sign").onclick = () => signaturePad.clear();
+document.getElementById("undo-sign").onclick = () => {
+  const data = signaturePad.toData();
+  if (data.length) data.pop();
+  signaturePad.fromData(data);
+};
+document.getElementById("clear-admin").onclick = () => adminPad.clear();
+
+// === TYPED SIGNATURE GENERATOR ===
+function generateTypedSignature() {
+  const text = document.getElementById("typedSig").value;
+  const ctx = sigCanvas.getContext("2d");
+  ctx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+  ctx.font = "30px 'Brush Script MT', cursive";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, sigCanvas.width / 2, sigCanvas.height / 2);
+}
+
+function generateTypedAdminSignature() {
+  const text = document.getElementById("typedAdminSig").value;
+  const ctx = adminCanvas.getContext("2d");
+  ctx.clearRect(0, 0, adminCanvas.width, adminCanvas.height);
+  ctx.font = "24px 'Brush Script MT', cursive";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, adminCanvas.width / 2, adminCanvas.height / 2);
+}
+
+// === ADD LIST INPUTS ===
+function addSerialField() {
+  const list = document.getElementById("serialList");
+  const input = document.createElement("input");
+  input.placeholder = "Enter serial number";
+  list.appendChild(input);
+}
+
+function addInvField() {
+  const list = document.getElementById("invList");
+  const input = document.createElement("input");
+  input.placeholder = "Enter inventory number";
+  list.appendChild(input);
+}
+
+function getVal(id) {
+  return document.getElementById(id).value || "";
+}
+
+function getListValues(container) {
+  return [...document.querySelectorAll(`#${container} input`)]
+    .map(i => i.value)
+    .filter(v => v)
+    .join(", ");
+}
+
+// === GENERATE PDF ===
+document.getElementById("generate").onclick = () => {
+  const data = {
+    emp_name: getVal("emp_name"),
+    department: getVal("department"),
+    doj: getVal("doj"),
+    emp_type: getVal("emp_type"),
+    designation: getVal("designation"),
+    prev_emp_name: getVal("prev_emp_name"),
+    prev_company: getVal("prev_company"),
+    prev_department: getVal("prev_department"),
+    asset_desc: getVal("asset_desc"),
+    serials: getListValues("serialList"),
+    inv_nums: getListValues("invList"),
+    date_returned: getVal("date_returned"),
+    date_issued: getVal("date_issued"),
+    admin_name: getVal("admin_name")
+  };
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: "pt", format: "a4" });
+  const margin = 40;
+  let y = 50;
+
+  doc.setFontSize(16);
+  doc.text("IT Asset Sign-Out Form - Burhani Engineers Ltd", margin, y);
+  y += 25;
+  doc.setFontSize(11);
+
+  function writeRow(label, value) {
+    doc.setFont(undefined, "bold");
+    doc.text(label + ":", margin, y);
+    doc.setFont(undefined, "normal");
+    doc.text(value || "-", margin + 140, y);
+    y += 20;
   }
 
-  function fitAll(){ fitCanvas(sigCanvas,200); fitCanvas(adminCanvas,100); }
-  window.addEventListener('resize', fitAll);
-  fitAll();
+  writeRow("Employee Name", data.emp_name);
+  writeRow("Department", data.department);
+  writeRow("Date of Joining", data.doj);
+  writeRow("Employment Type", data.emp_type);
+  writeRow("Designation", data.designation);
 
-  const signaturePad = new SignaturePad(sigCanvas, { backgroundColor: 'rgba(255,255,255,0)', penColor:'black' });
-  const adminPad = new SignaturePad(adminCanvas, { backgroundColor: 'rgba(255,255,255,0)', penColor:'black' });
+  doc.setFont(undefined, "bold");
+  doc.text("Previously Used By:", margin, y);
+  y += 20;
 
-  document.getElementById('clear-sign').addEventListener('click',()=>signaturePad.clear());
-  document.getElementById('undo-sign').addEventListener('click', ()=>{
-    const data = signaturePad.toData();
-    if(data.length){ data.pop(); signaturePad.fromData(data); }
-  });
-  document.getElementById('clear-admin').addEventListener('click',()=>adminPad.clear());
+  writeRow("Employee", data.prev_emp_name);
+  writeRow("Company", data.prev_company);
+  writeRow("Department", data.prev_department);
 
-  // Typed Signatures
-  function generateTypedSignature(){
-    const text = document.getElementById('typedSig').value;
-    const ctx = sigCanvas.getContext('2d');
-    ctx.clearRect(0,0,sigCanvas.width,sigCanvas.height);
-    ctx.font = "30px 'Brush Script MT', cursive";
-    ctx.fillStyle='black';
-    ctx.textBaseline='middle';
-    ctx.textAlign='center';
-    ctx.fillText(text, sigCanvas.width/2, sigCanvas.height/2);
+  doc.setFont(undefined, "bold");
+  doc.text("Assets / Description", margin, y);
+  y += 15;
+
+  doc.setFont(undefined, "normal");
+  const desc = doc.splitTextToSize(data.asset_desc, 500);
+  doc.text(desc, margin, y);
+  y += desc.length * 16;
+
+  writeRow("Serial Numbers", data.serials);
+  writeRow("Inventory Numbers", data.inv_nums);
+  writeRow("Date Returned", data.date_returned);
+  writeRow("Date Issued", data.date_issued);
+
+  y += 25;
+  doc.setFont(undefined, "bold");
+  doc.text("Signatures", margin, y);
+  y += 15;
+
+  if (!signaturePad.isEmpty()) {
+    doc.text("Employee Signature:", margin, y + 10);
+    doc.addImage(sigCanvas.toDataURL(), "PNG", margin + 140, y - 10, 200, 60);
+  } else {
+    doc.text("Employee Signature: Not Provided", margin, y);
   }
 
-  function generateTypedAdminSignature(){
-    const text = document.getElementById('typedAdminSig').value;
-    const ctx = adminCanvas.getContext('2d');
-    ctx.clearRect(0,0,adminCanvas.width,adminCanvas.height);
-    ctx.font = "24px 'Brush Script MT', cursive";
-    ctx.fillStyle='black';
-    ctx.textBaseline='middle';
-    ctx.textAlign='center';
-    ctx.fillText(text, adminCanvas.width/2, adminCanvas.height/2);
+  y += 80;
+
+  doc.text("Administrator Name:", margin, y);
+  doc.text(data.admin_name || "-", margin + 140, y);
+  y += 20;
+
+  if (!adminPad.isEmpty()) {
+    doc.addImage(adminCanvas.toDataURL(), "PNG", margin, y, 150, 40);
+    y += 50;
+  } else {
+    doc.text("Admin Signature: Not Provided", margin, y);
+    y += 20;
   }
 
-  // Add list inputs
-  function addSerialField(){
-    const div = document.getElementById('serialList');
-    const input = document.createElement('input');
-    input.type='text';
-    input.placeholder='Enter serial number';
-    div.appendChild(input);
-  }
+  doc.setFontSize(9);
+  doc.text(
+    "This form was generated digitally by the IT Department.",
+    margin,
+    800
+  );
 
-  function addInvField(){
-    const div = document.getElementById('invList');
-    const input = document.createElement('input');
-    input.type='text';
-    input.placeholder='Enter inventory number';
-    div.appendChild(input);
-  }
+  const filename = `${data.emp_name.replace(/\s+/g, "_")}_Signout.pdf`;
+  doc.save(filename);
+};
 
-  function getVal(id){ return (document.getElementById(id).value || '').toString(); }
-  function getListValues(containerId){
-    return Array.from(document.getElementById(containerId).querySelectorAll('input')).map(i=>i.value).filter(v=>v).join(', ');
-  }
-
-  // Generate PDF
-  document.getElementById('generate').addEventListener('click', ()=>{
-    const data = {
-      emp_name: getVal('emp_name'),
-      department: getVal('department'),
-      doj: getVal('doj'),
-      emp_type: getVal('emp_type'),
-      designation: getVal('designation'),
-      prev_emp_name: getVal('prev_emp_name'),
-      prev_company: getVal('prev_company'),
-      prev_department: getVal('prev_department'),
-      asset_desc: getVal('asset_desc'),
-      serials: getListValues('serialList'),
-      inv_nums: getListValues('invList'),
-      date_returned: getVal('date_returned'),
-      date_issued: getVal('date_issued'),
-      admin_name: getVal('admin_name')
-    };
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({unit:'pt',format:'a4'});
-    const margin=40;
-    let y=50;
-    const pageWidth = doc.internal.pageSize.getWidth();
-
-    doc.setFontSize(16);
-    doc.text("IT Asset Sign Out Form - Burhani Engineers Ltd", margin, y);
-    y+=20;
-    doc.setFontSize(11);
-
-    function writeRow(label,value){ 
-      doc.setFont(undefined,'bold'); doc.text(label+":", margin, y);
-      doc.setFont(undefined,'normal');
-      const split = doc.splitTextToSize(value||"-", pageWidth-margin*2-140);
-      doc.text(split, margin+140, y);
-      y += 14*split.length +6;
-    }
-
-    writeRow("Employee Name", data.emp_name);
-    writeRow("Department", data.department);
-    writeRow("Date of Joining", data.doj);
-    writeRow("Employment Type", data.emp_type);
-    writeRow("Designation", data.designation);
-
-    doc.setFont(undefined,'bold'); doc.text("Previously Used By", margin, y); y+=14;
-    writeRow("Employee Name", data.prev_emp_name);
-    writeRow("Company", data.prev_company);
-    writeRow("Department", data.prev_department);
-
-    doc.setFont(undefined,'bold'); doc.text("Assets / Description", margin, y); y+=14;
-    const desc = doc.splitTextToSize(data.asset_desc||"-", pageWidth-margin*2);
-    doc.setFont(undefined,'normal'); doc.text(desc, margin, y); y+=14*desc.length +6;
-
-    writeRow("Serial Numbers", data.serials);
-    writeRow("Inventory Numbers", data.inv_nums);
-    writeRow("Date Returned", data.date_returned);
-    writeRow("Date Issued", data.date_issued);
-
-    y+=18; doc.setFont(undefined,'bold'); doc.text("Signatures", margin, y); y+=14;
-
-    // Employee signature
-    if(!signaturePad.isEmpty()){
-      const sigDataUrl = sigCanvas.toDataURL('image/png');
-      doc.text("Employee Signature:", margin, y+12);
-      doc.addImage(sigDataUrl,'PNG',margin+140,y-2,200,60);
-    } else {
-      doc.text("Employee Signature: (not provided)", margin, y);
-    }
-    y+=80;
-
-    // Admin signature
-    doc.text("Administrator Name:", margin, y);
-    doc.text(data.admin_name||"-", margin+140, y); y+=20;
-    if(!adminPad.isEmpty()){
-      const adminSig = adminCanvas.toDataURL('image/png');
-      doc.addImage(adminSig,'PNG',margin, y,160,46); y+=60;
-    } else { doc.text("Administrator Signature: (not provided)", margin, y); y+=30; }
-
-    doc.setFontSize(9);
-    doc.text("This document was generated digitally. Burhani Engineers Limited retains ownership of assets issued during employment.", margin, doc.internal.pageSize.getHeight()-60);
-
-    const filename = `${(data.emp_name||"employee").replace(/\s+/g,'_')}_IT_Asset_Signout_${(data.date_issued||new Date().toISOString().slice(0,10))}.pdf`;
-    doc.save(filename);
-  });
-
-  document.getElementById('reset').addEventListener('click',()=>{
-    document.getElementById('assetForm').reset();
-    signaturePad.clear();
-    adminPad.clear();
-  });
+// RESET
+document.getElementById("reset").onclick = () => {
+  document.getElementById("assetForm").reset();
+  signaturePad.clear();
+  adminPad.clear();
+};
 </script>
+
 </body>
 </html>
